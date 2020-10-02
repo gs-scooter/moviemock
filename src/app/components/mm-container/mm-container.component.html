@@ -7,9 +7,14 @@
     </mat-button-toggle-group>
   </div>
   <mat-spinner *ngIf="!movieList.length"></mat-spinner>
-  <div *ngIf="movieList.length">
-    <mat-card *ngFor="let movie of movieList">
-      <mat-card-title>{{ movie.Title }}</mat-card-title>
+  <div *ngIf="movieList.length" class="list-root">
+    <mat-card class="card-root" *ngFor="let movie of movieList">
+      <mat-card-content class="card-content">
+        <img [src]="movie.Poster" />
+        <div class="movie-details">
+          <div class="title">{{ movie.Title }}</div>
+        </div>
+      </mat-card-content>
     </mat-card>
   </div>
 </div>
