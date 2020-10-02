@@ -1,0 +1,15 @@
+<div class="container-root">
+  <div class="decade-toggle">
+    <mat-button-toggle-group #toggleGroup>
+      <mat-button-toggle *ngFor="let decade of decades">{{
+        decade + "'s"
+      }}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <mat-spinner *ngIf="!movieList"></mat-spinner>
+  <div *ngIf="movieList">
+    <mat-card *ngFor="let movie of movieList">
+      <mat-title>{{ movie.Title }}</mat-title>
+    </mat-card>
+  </div>
+</div>
