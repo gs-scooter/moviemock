@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { forkJoin, Subscription } from 'rxjs';
 import { MatButtonToggleGroup } from '@angular/material/button-toggle';
 
 import { MovieModel } from '../../models/movie.model';
@@ -11,27 +11,47 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./mm-container.component.scss'],
 })
 export class MmContainerComponent implements OnInit, OnDestroy {
-  decades = ['2010', '2000', '1990', '1980'];
+  @ViewChild(MatButtonToggleGroup) toggleGroup: MatButtonToggleGroup;
 
-  movieList: MovieModel[] = [];
-  private _subscription: Subscription = new Subscription();
+  decades = [2010, 2000, 1990, 1980];
 
-  constructor(private apiService: ApiService) {
-    this._subscription.add(
+  filteredList: MovieModel[] = [];
+  private movieList: MovieModel[] = [];
+  private subscription: Subscription = new Subscription();
+
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit(): void {
+    const requests = [];
+    this.subscription.add(
       this.apiService.getMovieSummaryList().subscribe((results: any) => {
         results.Search.forEach((item) => {
-          this.apiService
-            .getMovieDetails(item.imdbID)
-            .subscribe((movie) => this.movieList.push(movie));
+          requests.push(this.apiService.getMovieDetails(item.imdbID));
+        });
+        forkJoin(requests).subscribe((responses) => {
+          responses.forEach((movie: MovieModel) => {
+            movie.yearNumber = Number(movie.Year);
+            this.movieList.push(movie);
+          });
+          this.filterDecade(this.decades[0]);
+          this.toggleGroup.value = this.decades[0];
         });
       })
     );
   }
-
-  ngOnInit(): void {}
   ngOnDestroy(): void {
-    if (this._subscription) {
-      this._subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
+  }
+
+  launchImdb(imdbId: string): void {
+    window.open(`https://www.imdb.com/title/${imdbId}`, '_blank');
+  }
+
+  filterDecade(decade: number): void {
+    this.filteredList = this.movieList.filter(
+      (movie) => movie.yearNumber >= decade && movie.yearNumber < decade + 10
+    );
   }
 }

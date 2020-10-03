@@ -1,20 +1,34 @@
 <div class="container-root">
   <div class="decade-toggle">
-    <mat-button-toggle-group #toggleGroup>
-      <mat-button-toggle *ngFor="let decade of decades">{{
-        decade + "'s"
-      }}</mat-button-toggle>
+    <mat-button-toggle-group>
+      <mat-button-toggle
+        *ngFor="let decade of decades"
+        [value]="decade"
+        (click)="filterDecade(decade)"
+        >{{ decade + "'s" }}</mat-button-toggle
+      >
     </mat-button-toggle-group>
   </div>
-  <mat-spinner *ngIf="!movieList.length"></mat-spinner>
-  <div *ngIf="movieList.length" class="list-root">
-    <mat-card class="card-root" *ngFor="let movie of movieList">
+  <mat-spinner *ngIf="!filteredList.length" class="spinner"></mat-spinner>
+  <div *ngIf="filteredList.length" class="list-root">
+    <mat-card class="card-root" *ngFor="let movie of filteredList">
       <mat-card-content class="card-content">
         <img [src]="movie.Poster" />
         <div class="movie-details">
           <div class="title">{{ movie.Title }}</div>
+          <div class="film-info">
+            <div class="rating">{{ movie.Rated }}</div>
+            <div class="runtime">{{ movie.Runtime }}</div>
+            <div class="release-date">{{ movie.Released }}</div>
+          </div>
           <div class="plot">{{ movie.Plot }}</div>
-          <button mat-button class="view-button">View on IMDB</button>
+          <button
+            mat-button
+            class="view-button"
+            (click)="launchImdb(movie.imdbID)"
+          >
+            View on IMDB
+          </button>
         </div>
       </mat-card-content>
     </mat-card>

@@ -13,6 +13,15 @@
   margin-bottom: 40px;
 }
 
+.spinner {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .list-root {
   height: 75vh;
   overflow-y: auto;
@@ -43,6 +52,28 @@
       font-family: "OpenSans-Regular";
       font-size: 24px;
       border-bottom: 1px solid rgb(141, 152, 158);
+    }
+
+    .film-info {
+      display: flex;
+      font-size: 14px;
+      line-height: 18px;
+      align-items: baseline;
+
+      .rating {
+        text-align: center;
+        margin-top: 4px;
+        margin-right: 16px;
+        width: 58px;
+        border: 1px solid rgb(141, 152, 157);
+        border-radius: 4px;
+        font-family: "Courier New", Courier, monospace;
+        color: rgb(141, 152, 157);
+      }
+
+      .runtime {
+        flex-grow: 1;
+      }
     }
 
     .plot {
