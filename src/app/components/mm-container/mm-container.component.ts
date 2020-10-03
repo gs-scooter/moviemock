@@ -25,7 +25,10 @@ export class MmContainerComponent implements OnInit, OnDestroy {
     const requests = [];
     this.subscription.add(
       this.apiService.getMovieSummaryList().subscribe((results: any) => {
-        results.Search.forEach((item) => {
+        const sortedList = results.Search.sort(
+          (a, b) => Number(b.Year) - Number(a.Year)
+        );
+        sortedList.forEach((item) => {
           requests.push(this.apiService.getMovieDetails(item.imdbID));
         });
         forkJoin(requests).subscribe((responses) => {
@@ -33,8 +36,7 @@ export class MmContainerComponent implements OnInit, OnDestroy {
             movie.yearNumber = Number(movie.Year);
             this.movieList.push(movie);
           });
-          this.filterDecade(this.decades[0]);
-          this.toggleGroup.value = this.decades[0];
+          this.filteredList = [...this.movieList];
         });
       })
     );

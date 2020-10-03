@@ -29,10 +29,22 @@ $moviemock-theme: mat-light-theme(
   )
 );
 
+@mixin mix-theme($moviemock-theme) {
+  .mat-button-toggle-label-content {
+    line-height: normal !important;
+    padding: 10px 24px !important;
+  }
+  .mat-button-toggle-checked {
+    background-color: rgb(0, 98, 227) !important;
+    color: white !important;
+  }
+}
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($moviemock-theme);
+@include mix-theme($moviemock-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
