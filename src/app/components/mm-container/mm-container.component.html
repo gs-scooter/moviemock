@@ -5,8 +5,9 @@
         *ngFor="let decade of decades"
         [value]="decade"
         (click)="filterDecade(decade)"
-        >{{ decade + "'s" }}</mat-button-toggle
       >
+        {{ decade + "'s" }}
+      </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
   <mat-spinner *ngIf="!filteredList.length" class="spinner"></mat-spinner>
@@ -19,7 +20,7 @@
           <div class="film-info">
             <div class="rating">{{ movie.Rated }}</div>
             <div class="runtime">{{ movie.Runtime }}</div>
-            <div class="release-date">{{ movie.Released }}</div>
+            <div>{{ movie.Released }}</div>
           </div>
           <div class="plot">{{ movie.Plot }}</div>
           <button
