@@ -1,7 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { forkJoin, Subscription } from 'rxjs';
-import { MatButtonToggleGroup } from '@angular/material/button-toggle';
-
 import { MovieModel } from '../../models/movie.model';
 import { ApiService } from '../../services/api.service';
 
@@ -11,8 +9,6 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./mm-container.component.scss'],
 })
 export class MmContainerComponent implements OnInit, OnDestroy {
-  @ViewChild(MatButtonToggleGroup) toggleGroup: MatButtonToggleGroup;
-
   decades = [2010, 2000, 1990, 1980];
 
   filteredList: MovieModel[] = [];
